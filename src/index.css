@@ -1,0 +1,39 @@
+.visualiser-background {
+  width: 1500px;
+  height: 800px;
+  margin: 100px auto;
+}
+
+.array-container {
+  list-style: none;
+  display: flex;
+  column-gap: 5px;
+  padding-top: 400px;
+  transform: scaleY(-1);
+  height: 600px;
+}
+
+.generate-button {
+  border: none;
+  font-size: 16px;
+  padding: 12px 32px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin-right: 80px;
+  cursor: pointer;
+  background-color: #e9ecef;
+}
+.generate-button:hover {
+  background-color: #ced4da;
+}
+
+.sort-button {
+  border: none;
+  font-size: 16px;
+  padding: 12px 32px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  cursor: pointer;
+  background-color: #e9ecef;
+}
+.sort-button:hover {
+  background-color: #ced4da;
+}
