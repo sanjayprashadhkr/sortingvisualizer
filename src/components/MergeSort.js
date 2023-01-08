@@ -1,10 +1,10 @@
 //Create a helper function that makes a copy of the original array which return the sorted array
-let auxillaryarray;
-let animations;
+let duplicatearray;
+let eachsteps;
 export function MergeSortHelper(originalarray) {
-  animations = [];
-  auxillaryarray = originalarray.slice();
-  mergeSort(auxillaryarray, 0, auxillaryarray.length - 1);
+  eachsteps = [];
+  duplicatearray = originalarray.slice();
+  mergeSort(duplicatearray, 0, duplicatearray.length - 1);
   //TESTING THE SORTING ALGORITHM
   /*
   const testarray = originalarray.slice();
@@ -14,8 +14,8 @@ export function MergeSortHelper(originalarray) {
 
 
   let flag = 0;
-  for (let i = 0; i < auxillaryarray.length; i++) {
-    if (auxillaryarray[i] !== testarray[i]) {
+  for (let i = 0; i < duplicatearray.length; i++) {
+    if (duplicatearray[i] !== testarray[i]) {
       console.log("YOUR SORTING IS WRONG");
       flag = 1;
     }
@@ -23,11 +23,12 @@ export function MergeSortHelper(originalarray) {
   if (flag === 0) console.log("YOUR SORTING IS CORRECT!!!!");
   */
   //THIS IS THE SORTED ARRAY
-  // console.log(auxillaryarray);
-  return animations;
+  // console.log(duplicatearray);
+  return [eachsteps, duplicatearray];
 }
 
 function mergeSort(arr, startIndex, endIndex) {
+  //Why startIndex===endIndex ???
   if (startIndex === endIndex) {
     return;
   }
@@ -37,48 +38,48 @@ function mergeSort(arr, startIndex, endIndex) {
   merge(arr, startIndex, middleIndex, endIndex);
 }
 
-function merge(auxillaryarray, startIndex, middleIndex, endIndex) {
+function merge(duplicatearray, startIndex, middleIndex, endIndex) {
   let mergedArray = [];
   let i = startIndex,
     j = middleIndex + 1,
     k = startIndex;
   while (i <= middleIndex && j <= endIndex) {
-    if (auxillaryarray[i] < auxillaryarray[j]) {
-      //push the element =s that we are going to compare in animations array
-      //Since i and j are the actual indexes in the array push them in the animations array
-      animations.push(["swap", i, j]);
-      mergedArray.push(auxillaryarray[i]);
-      //Push the element in the animations array as this is the smaller as per the comparison
-      animations.push(["change", k, auxillaryarray[i]]);
+    if (duplicatearray[i] < duplicatearray[j]) {
+      //push the element =s that we are going to compare in eachsteps array
+      //Since i and j are the actual indexes in the array push them in the eachsteps array
+      eachsteps.push(["highlight", i, j]);
+      mergedArray.push(duplicatearray[i]);
+      //Push the element in the eachsteps array as this is the smaller as per the comparison
+      eachsteps.push(["push", k, duplicatearray[i]]);
       k++;
       //Update the copy of the original array
       i++;
     } else {
-      //Since i and j are the actual indexes in the array that we are going to compare push them in the animations array
-      animations.push(["swap", i, j]);
-      mergedArray.push(auxillaryarray[j]);
-      animations.push(["change", k, auxillaryarray[j]]);
+      //Since i and j are the actual indexes in the array that we are going to compare push them in the eachsteps array
+      eachsteps.push(["highlight", i, j]);
+      mergedArray.push(duplicatearray[j]);
+      eachsteps.push(["push", k, duplicatearray[j]]);
       k++;
       j++;
     }
   }
   while (i <= middleIndex) {
-    mergedArray.push(auxillaryarray[i]);
-    animations.push(["change", k, auxillaryarray[i]]);
+    mergedArray.push(duplicatearray[i]);
+    eachsteps.push(["push", k, duplicatearray[i]]);
     i++;
     k++;
   }
   while (j <= endIndex) {
-    mergedArray.push(auxillaryarray[j]);
-    animations.push(["change", k, auxillaryarray[j]]);
+    mergedArray.push(duplicatearray[j]);
+    eachsteps.push(["push", k, duplicatearray[j]]);
     j++;
     k++;
   }
   //Copy the values from merged array to auxillary array
   k = startIndex;
   for (let i = 0; i < mergedArray.length; i++) {
-    auxillaryarray[k] = mergedArray[i];
+    duplicatearray[k] = mergedArray[i];
     k++;
   }
-  // console.log(auxillaryarray);
+  // console.log(duplicatearray);
 }
