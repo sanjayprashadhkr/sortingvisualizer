@@ -33,6 +33,7 @@
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   cursor: pointer;
   background-color: #e9ecef;
+  margin-right: 80px;
 }
 .sort-button:hover {
   background-color: #ced4da;

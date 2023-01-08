@@ -5,25 +5,6 @@ export function MergeSortHelper(originalarray) {
   eachsteps = [];
   duplicatearray = originalarray.slice();
   mergeSort(duplicatearray, 0, duplicatearray.length - 1);
-  //TESTING THE SORTING ALGORITHM
-  /*
-  const testarray = originalarray.slice();
-  testarray.sort(function (a, b) {
-    return a - b;
-  });
-
-
-  let flag = 0;
-  for (let i = 0; i < duplicatearray.length; i++) {
-    if (duplicatearray[i] !== testarray[i]) {
-      console.log("YOUR SORTING IS WRONG");
-      flag = 1;
-    }
-  }
-  if (flag === 0) console.log("YOUR SORTING IS CORRECT!!!!");
-  */
-  //THIS IS THE SORTED ARRAY
-  // console.log(duplicatearray);
   return [eachsteps, duplicatearray];
 }
 
@@ -58,6 +39,7 @@ function merge(duplicatearray, startIndex, middleIndex, endIndex) {
       //Since i and j are the actual indexes in the array that we are going to compare push them in the eachsteps array
       eachsteps.push(["highlight", i, j]);
       mergedArray.push(duplicatearray[j]);
+      //k is barIndex & duplicatearray[i] is the bar length
       eachsteps.push(["push", k, duplicatearray[j]]);
       k++;
       j++;
