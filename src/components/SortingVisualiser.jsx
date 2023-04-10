@@ -11,7 +11,7 @@ const size = 20;
 const MIN_ELEMENT = 10;
 const MAX_ELEMENT = 100;
 const ZOOM_HEIGHT = 5;
-const PRIMARY_COLOR = "#66d9e8";
+const PRIMARY_COLOR = "#c1c1c1";
 const SECONDARY_COLOR = "red";
 const DELAY_IN_MS = 20;
 let isSortingRunning = false;
@@ -172,6 +172,8 @@ export const SortingVisualiser = () => {
                 backgroundColor: PRIMARY_COLOR,
                 height: `${number * ZOOM_HEIGHT}px`,
                 width: `${currentWidth}px`,
+                borderBottomLeftRadius: `5px`,
+                borderBottomRightRadius: `5px`,
               }}
               key={index}
             ></li>
