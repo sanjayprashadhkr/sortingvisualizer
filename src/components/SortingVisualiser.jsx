@@ -5,8 +5,9 @@ import { MergeSortHelper } from "./MergeSort";
 import { BubbleSortHelper } from "./BubbleSort";
 import { SelectionSortHelper } from "./SelectionSort";
 import { InsertionSortHelper } from "./InsertionSort";
-const DELAY_TIME = 200;
-const NUMBER_OF_ELEMENTS = 100;
+import { Dropdown } from "./Dropdown";
+
+const size = 20;
 const MIN_ELEMENT = 10;
 const MAX_ELEMENT = 100;
 const ZOOM_HEIGHT = 5;
@@ -14,12 +15,19 @@ const PRIMARY_COLOR = "#66d9e8";
 const SECONDARY_COLOR = "red";
 const DELAY_IN_MS = 20;
 let isSortingRunning = false;
+
+function getRandomArbitrary(min, max) {
+  return Math.floor(Math.random() * (max - min) + min);
+}
 export const SortingVisualiser = () => {
+  const [selectedSortingAlgo, setSelectedSortingAlgo] = useState("Merge Sort");
   const [array, setArray] = useState([]);
+  const [size, setSize] = useState(20);
+  const [scalingFactor, setScalingFactor] = useState(1.5);
+  const [currentWidth, setCurrentWidth] = useState(20);
+
   //Returns a random number between the specified range
-  function getRandomArbitrary(min, max) {
-    return Math.floor(Math.random() * (max - min) + min);
-  }
+
   async function playSortingAnimation(eachsteps, duplicatearray) {
     //Whener I use setArray & set the array the array bars gets rerendered
     const arraybars = document.getElementsByClassName("array-bar");
@@ -52,39 +60,6 @@ export const SortingVisualiser = () => {
     setArray(duplicatearray);
     isSortingRunning = false;
   }
-  /*
-  async function playSortingAnimation(eachsteps, duplicatearray) {
-    //Whener I use setArray & set the array the array bars gets rerendered
-    //gets all the bars that are on the screen bar1,bar,bar3,.........bar_n
-    const arraybars = document.getElementsByClassName("array-bar");
-    // console.log(arraybars);
-    let barOne, barTwo, barIndex, barLength;
-    for (let i = 0; i < eachsteps.length; i++) {
-      if (eachsteps[i][0] == "highlight") {
-        //HIGHLIGHT THE ELEMENTS THAT NEEDS TO BE COMPARED AND GIVE SOME DELAY TO DISPLAY THE HIGHLIGHT COLOR
-        // await new Promise((resolve) => setTimeout(resolve, 10));
-
-        barOne = eachsteps[i][1];
-        barTwo = eachsteps[i][2];
-
-        arraybars[barOne].style.backgroundColor = SECONDARY_COLOR;
-        arraybars[barTwo].style.backgroundColor = SECONDARY_COLOR;
-        //AFTER SOME AMOUNT OF TIME RESET THE COLOR
-        await new Promise((resolve) => setTimeout(resolve, DELAY_IN_MS));
-        arraybars[barOne].style.backgroundColor = PRIMARY_COLOR;
-        arraybars[barTwo].style.backgroundColor = PRIMARY_COLOR;
-      } else {
-        //CHANGE THE HEIGHT OF THE RESPECTIVE BARS
-        await new Promise((resolve) => setTimeout(resolve, DELAY_IN_MS));
-        barIndex = eachsteps[i][1];
-        barLength = eachsteps[i][2];
-
-        arraybars[barIndex].style.height = `${barLength * ZOOM_HEIGHT}px`;
-      }
-    }
-    setArray(duplicatearray);
-    isSortingRunning = false;
-  }*/
   async function bubbleSort(arr) {
     if (isSortingRunning === false) {
       isSortingRunning = true;
@@ -122,70 +97,87 @@ export const SortingVisualiser = () => {
   //will be no comparisons that happens in the beginning
   function generateNumbers() {
     let temp = [];
-    for (let i = 0; i < NUMBER_OF_ELEMENTS; i++) {
+    for (let i = 0; i < size; i++) {
       temp.push(getRandomArbitrary(MIN_ELEMENT, MAX_ELEMENT));
     }
     //Updates the array state so that the component will be rendered to reflected the changes in the UI
     setArray([...temp]);
-    console.log(array);
+    // console.log(array);
   }
 
   //This useEffect generates a random setof array elements on page load
   useEffect(() => generateNumbers(), []);
+  useEffect(() => {
+    generateNumbers();
+  }, [size]);
 
+  function startSorting() {
+    if (selectedSortingAlgo === "Merge Sort") {
+      mergeSort(array);
+    } else if (selectedSortingAlgo === "Bubble Sort") {
+      bubbleSort(array);
+    } else if (selectedSortingAlgo === "Selection Sort") {
+      SelectionSort(array);
+    } else if (selectedSortingAlgo === "Insertion Sort") {
+      InsertionSort(array);
+    }
+  }
   return (
-    <div>
+    <>
+      <Dropdown
+        setSelectedSortingAlgo={setSelectedSortingAlgo}
+        selectedSortingAlgo={selectedSortingAlgo}
+      />
+      <label for="size">Size:</label>
+      <input
+        type="range"
+        id="size"
+        name="size"
+        min="10"
+        max="100"
+        step="1"
+        value={size}
+        onChange={(e) => {
+          //If the curent number of elements is greater than the new size then increase the scaling factor
+          setCurrentWidth(
+            size > 70
+              ? 10
+              : size > 50
+              ? 15
+              : size > 40
+              ? 20
+              : size > 25
+              ? 25
+              : size > 20
+              ? 35
+              : size > 15
+              ? 40
+              : 45
+          );
+
+          setSize(e.target.value);
+          console.log(size);
+        }}
+      ></input>
+      <button onClick={startSorting}>Start</button>
       <button className="generate-button" onClick={generateNumbers}>
         Reset Array
       </button>
-      {/* <button className="generate-button" onClick={displayArray}>
-        Show array
-      </button> */}
-      <button
-        className="sort-button"
-        onClick={() => {
-          mergeSort(array);
-        }}
-      >
-        Merge Sort
-      </button>
-      <button
-        className="sort-button"
-        onClick={() => {
-          bubbleSort(array);
-        }}
-      >
-        BubbleSort
-      </button>
-      <button
-        className="sort-button"
-        onClick={() => {
-          SelectionSort(array);
-        }}
-      >
-        SelectionSort
-      </button>
-      <button
-        className="sort-button"
-        onClick={() => {
-          InsertionSort(array);
-        }}
-      >
-        InsertionSort
-      </button>
-      <ul className="array-container">
-        {array.map((number, index) => (
-          <li
-            className="array-bar"
-            style={{
-              backgroundColor: PRIMARY_COLOR,
-              height: `${number * ZOOM_HEIGHT}px`,
-              width: "10px",
-            }}
-            key={index}
-          ></li>
-        ))}
-      </ul>
-    </div>
+      <div className="container">
+        <ul className="bar-container">
+          {array.map((number, index) => (
+            <li
+              className="array-bar"
+              style={{
+                backgroundColor: PRIMARY_COLOR,
+                height: `${number * ZOOM_HEIGHT}px`,
+                width: `${currentWidth}px`,
+              }}
+              key={index}
+            ></li>
+          ))}
+        </ul>
+      </div>
+    </>
   );
 };
