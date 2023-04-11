@@ -1,11 +1,13 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import "../index.css";
+import "./navbar.css";
 import { MergeSortHelper } from "./MergeSort";
 import { BubbleSortHelper } from "./BubbleSort";
 import { SelectionSortHelper } from "./SelectionSort";
 import { InsertionSortHelper } from "./InsertionSort";
 import { Dropdown } from "./Dropdown";
+import { Input } from "./Input";
 
 const size = 20;
 const MIN_ELEMENT = 10;
@@ -124,61 +126,51 @@ export const SortingVisualiser = () => {
   }
   return (
     <>
-      <Dropdown
-        setSelectedSortingAlgo={setSelectedSortingAlgo}
-        selectedSortingAlgo={selectedSortingAlgo}
-      />
-      <label for="size">Size:</label>
-      <input
-        type="range"
-        id="size"
-        name="size"
-        min="10"
-        max="100"
-        step="1"
-        value={size}
-        onChange={(e) => {
-          //If the curent number of elements is greater than the new size then increase the scaling factor
-          setCurrentWidth(
-            size > 70
-              ? 10
-              : size > 50
-              ? 15
-              : size > 40
-              ? 20
-              : size > 25
-              ? 25
-              : size > 20
-              ? 35
-              : size > 15
-              ? 40
-              : 45
-          );
-
-          setSize(e.target.value);
-          console.log(size);
-        }}
-      ></input>
-      <button onClick={startSorting}>Start</button>
-      <button className="generate-button" onClick={generateNumbers}>
-        Reset Array
-      </button>
-      <div className="container">
-        <ul className="bar-container">
-          {array.map((number, index) => (
-            <li
-              className="array-bar"
-              style={{
-                backgroundColor: PRIMARY_COLOR,
-                height: `${number * ZOOM_HEIGHT}px`,
-                width: `${currentWidth}px`,
-                borderBottomLeftRadius: `5px`,
-                borderBottomRightRadius: `5px`,
-              }}
-              key={index}
-            ></li>
-          ))}
-        </ul>
+      <navbar className="navbar">
+        <button className="generate-button" onClick={startSorting}>
+          Start
+        </button>
+        <button className="generate-button" onClick={generateNumbers}>
+          Reset Array
+        </button>
+        <Dropdown
+          setSelectedSortingAlgo={setSelectedSortingAlgo}
+          selectedSortingAlgo={selectedSortingAlgo}
+        />
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "16px",
+          }}
+        >
+          <div style={{ paddingBottom: "8px", color: "white" }}>Size:</div>
+          <Input
+            size={size}
+            setCurrentWidth={setCurrentWidth}
+            setSize={setSize}
+          />
+        </div>
+      </navbar>
+      <div className="visualiser-background">
+        <div className="container">
+          <ul className="bar-container">
+            {array.map((number, index) => (
+              <li
+                className="array-bar"
+                style={{
+                  backgroundColor: PRIMARY_COLOR,
+                  height: `${number * ZOOM_HEIGHT}px`,
+                  width: `${currentWidth}px`,
+                  borderBottomLeftRadius: `5px`,
+                  borderBottomRightRadius: `5px`,
+                }}
+                key={index}
+              ></li>
+            ))}
+          </ul>
+        </div>
       </div>
     </>
   );

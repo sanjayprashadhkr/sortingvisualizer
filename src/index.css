@@ -7,8 +7,9 @@ body {
 
 .visualiser-background {
   width: 1500px;
-  height: 800px;
+  height: 670px;
   margin: 100px auto;
+  margin-bottom: 0;
 }
 
 .container {
@@ -30,14 +31,18 @@ body {
 .generate-button {
   border: none;
   font-size: 16px;
-  padding: 12px 32px;
+  padding: 10px 32px;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   margin-right: 80px;
   cursor: pointer;
   background-color: #e9ecef;
+  height: 56px;
+  border-radius: 5px;
+  background-color: #2a2f3c;
+  color: #fff;
 }
 .generate-button:hover {
-  background-color: #ced4da;
+  background-color: #323846;
 }
 
 .sort-button {

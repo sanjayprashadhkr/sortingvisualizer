@@ -6,9 +6,7 @@ import { elements } from "./components/SortingVisualiser";
 function App() {
   return (
     <div className="App">
-      <div className="visualiser-background">
-        <SortingVisualiser />
-      </div>
+      <SortingVisualiser />
     </div>
   );
 }

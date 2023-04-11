@@ -13,6 +13,7 @@ export const Dropdown = ({ selectedSortingAlgo, setSelectedSortingAlgo }) => {
     { value: "Merge Sort", label: "Merge Sort" },
     { value: "Bubble Sort", label: "Bubble Sort" },
     { value: "Insertion Sort", label: "Insertion sort" },
+    { value: "Selection Sort", label: "Selection Sort" },
   ];
 
   function handleChange(e) {
@@ -57,7 +58,7 @@ export const Dropdown = ({ selectedSortingAlgo, setSelectedSortingAlgo }) => {
         },
 
         color: "white",
-        margin: "20px 0",
+        margin: "10px 0",
       };
     },
     menu: (styles) => ({
