@@ -7,7 +7,6 @@ import "./dropdown.css";
 
 export const Dropdown = ({ selectedSortingAlgo, setSelectedSortingAlgo }) => {
   const [toggleSelect, setToggleSelect] = useState(false);
-  // const [text, setText] = useState("Merge Sort");
   const [value, setValue] = useState("Merge Sort");
   const options = [
     { value: "Merge Sort", label: "Merge Sort" },
@@ -73,7 +72,7 @@ export const Dropdown = ({ selectedSortingAlgo, setSelectedSortingAlgo }) => {
       <Select
         options={options}
         defaultValue={value}
-        placeholder="Select Sorting"
+        placeholder="Merge Sort"
         onChange={(selectedOption) => {
           setSelectedSortingAlgo(selectedOption.value);
         }}

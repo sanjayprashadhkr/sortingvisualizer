@@ -3,8 +3,6 @@ let eachsteps;
 export function SelectionSortHelper(originalarray) {
   eachsteps = [];
   duplicatearray = originalarray.slice();
-  // console.log("BEFORE SORTING");
-  // console.log(duplicatearray);
   //This for loop will run for n-1 times as we have to  find the first,second third.....n-1th largest number in each step
   //We dont have to find nth largest number as by the time we find the n-1th largest number and placed that number in the correct index the only remaining
   //element will the nth largest number

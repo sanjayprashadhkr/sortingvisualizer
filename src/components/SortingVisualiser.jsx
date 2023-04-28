@@ -9,7 +9,6 @@ import { InsertionSortHelper } from "./InsertionSort";
 import { Dropdown } from "./Dropdown";
 import { Input } from "./Input";
 
-const size = 20;
 const MIN_ELEMENT = 10;
 const MAX_ELEMENT = 100;
 const ZOOM_HEIGHT = 5;
@@ -24,16 +23,15 @@ function getRandomArbitrary(min, max) {
 export const SortingVisualiser = () => {
   const [selectedSortingAlgo, setSelectedSortingAlgo] = useState("Merge Sort");
   const [array, setArray] = useState([]);
-  const [size, setSize] = useState(20);
+  const [size, setSize] = useState(40);
+  const [delay, setDelay] = useState(20);
   const [scalingFactor, setScalingFactor] = useState(1.5);
   const [currentWidth, setCurrentWidth] = useState(20);
 
   //Returns a random number between the specified range
 
   async function playSortingAnimation(eachsteps, duplicatearray) {
-    //Whener I use setArray & set the array the array bars gets rerendered
     const arraybars = document.getElementsByClassName("array-bar");
-    // console.log(arraybars);
     let barOne, barTwo, barIndex, barLength;
     for (let i = 0; i < eachsteps.length; i++) {
       if (eachsteps[i][0] === "highlight") {
@@ -46,7 +44,7 @@ export const SortingVisualiser = () => {
         arraybars[barOne].style.backgroundColor = SECONDARY_COLOR;
         arraybars[barTwo].style.backgroundColor = SECONDARY_COLOR;
         //AFTER SOME AMOUNT OF TIME RESET THE COLOR
-        await new Promise((resolve) => setTimeout(resolve, DELAY_IN_MS));
+        await new Promise((resolve) => setTimeout(resolve, delay));
         arraybars[barOne].style.backgroundColor = PRIMARY_COLOR;
         arraybars[barTwo].style.backgroundColor = PRIMARY_COLOR;
       } else {
@@ -56,7 +54,6 @@ export const SortingVisualiser = () => {
         barIndex = eachsteps[i][1];
         barLength = eachsteps[i][2];
         arraybars[barIndex].style.height = `${barLength * ZOOM_HEIGHT}px`;
-        //await new Promise((resolve) => setTimeout(resolve, DELAY_IN_MS));
       }
     }
     setArray(duplicatearray);
@@ -131,8 +128,9 @@ export const SortingVisualiser = () => {
           Start
         </button>
         <button className="generate-button" onClick={generateNumbers}>
-          Reset Array
+          Reset
         </button>
+
         <Dropdown
           setSelectedSortingAlgo={setSelectedSortingAlgo}
           selectedSortingAlgo={selectedSortingAlgo}
@@ -151,6 +149,20 @@ export const SortingVisualiser = () => {
             setCurrentWidth={setCurrentWidth}
             setSize={setSize}
           />
+          <div style={{ paddingBottom: "8px", color: "white" }}>Delay:</div>
+          <input
+            type="range"
+            id="delay"
+            name="size"
+            min="20"
+            max="1000"
+            step="1"
+            value={delay}
+            onChange={(e) => {
+              //If the curent number of elements is greater than the new size then increase the scaling factor
+              setDelay(e.target.value);
+            }}
+          ></input>
         </div>
       </navbar>
       <div className="visualiser-background">
